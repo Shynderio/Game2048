@@ -21,10 +21,6 @@ async def reset_game():
 
 board = g2048.make_empty_board()
 
-
-
-
-
 client = commands.Bot(command_prefix = 'ska ', intents=discord.Intents.all())
 
 @client.command(name = 'emote')
@@ -35,46 +31,41 @@ async def emote(context):
 async def on_ready():
     print('Ready')
 
-
-
-
-# @client.command()
-# async def start(ctx): #Starts embed
-#     # await reset_game()
-#     embed = discord.Embed(title='2048', description=g2048.format_board_as_str(), color=0x077ff7)
-#     embed.add_field(name='How to Play:', value='Use ⬅ ⬇ ➡ to move left, down, and right respectively. \n  \n Use 🔃 to rotate the shape clockwise. \n \n Press ▶ to Play.', inline=False)
-#     msg = await ctx.send(embed=embed)
-
 async def run_game(mes, direc):
     # ctx = mes.channel
     game_over = False
     global board
+    temp = copy.deepcopy(board)
     
     if direc == 'up':
         up = g2048.up(board)
         board = copy.deepcopy(up)
-        g2048.add_two(board)
+        if g2048.compare_board(temp, board) == False:
+            g2048.add_two(board)
         img = g2048.convert_toimg(board)
         img.save('img.jpg')
         
     if direc == 'down':
         down = g2048.down(board)
         board = copy.deepcopy(down)
-        g2048.add_two(board)
+        if g2048.compare_board(temp, board) == False:
+            g2048.add_two(board)
         img = g2048.convert_toimg(board)
         img.save('img.jpg')
         
     if direc == 'left':
         left = g2048.left(board)
         board = copy.deepcopy(left)
-        g2048.add_two(board)
+        if g2048.compare_board(temp, board) == False:
+            g2048.add_two(board)
         img = g2048.convert_toimg(board)
         img.save('img.jpg')
    
     if direc == 'right':
         right = g2048.right(board)
         board = copy.deepcopy(right)
-        g2048.add_two(board)
+        if g2048.compare_board(temp, board) == False:
+            g2048.add_two(board)
         img = g2048.convert_toimg(board)
         img.save('img.jpg')
 

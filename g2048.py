@@ -53,7 +53,13 @@ def add_two(board):
                 a.append(row*4 + col)
     rannum = random.randint(0,len(a) - 1)
     
-    board[int(a[rannum]/4)][int(a[rannum]%4)] = 2
+    num_to_add = random.randint(0, 16) % 8
+    if num_to_add == 0:
+        num_to_add = 4
+    else:
+        num_to_add = 2
+    
+    board[int(a[rannum]/4)][int(a[rannum]%4)] = num_to_add
     
     # board[2][3] = 4
     
@@ -133,3 +139,9 @@ def convert_toimg(k):
             newimg.paste(im, (j*200,i*200))
     return newimg
 
+def compare_board(a, b):
+    for i in range(4):
+        for j in range(4):
+            if (a[i][j] != b[i][j]):
+                return False
+    return True
